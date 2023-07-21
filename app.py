@@ -46,7 +46,7 @@ def main():
         with st.spinner("Searching for articles..."):
             
             google_news = GNews(language='en', max_results = 100)
-            google_news.topic = "Business"
+            # google_news.topic = "Business"
             
             @st.cache_data
             def get_news_func(_gnews_object, kwds):
@@ -81,11 +81,7 @@ def main():
             hide_index=True,
             width = 2000,
             column_config={"Select": st.column_config.CheckboxColumn(required=True),
-                        #    "Title": st.column_config.Column(width = None), 
-                        #    "Select": st.column_config.Column(width = "small"), 
-                        #    "Date": st.column_config.Column(width = "small"), 
                             "URL": st.column_config.LinkColumn("URL", required=True)},
-                            # "URL": st.column_config.Column(width = "small")},
             disabled = response.columns,
             on_change = set_state,
             args = [2],           
@@ -136,4 +132,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
