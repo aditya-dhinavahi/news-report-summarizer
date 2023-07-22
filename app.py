@@ -45,7 +45,7 @@ def main():
             
             
             google_news = GNews(language='en', max_results = 150)
-            google_news.topic = "Business"
+            # google_news.topic = "Business"
 
             @st.cache_data
             def get_news_func(_gnews_object, kwds):
