@@ -96,41 +96,41 @@ def main():
             st.write("Your selection:")
             st.dataframe(selected_rows, width = 1500, hide_index = True)
 
-        summarize_button = st.button ("Click to summarize selected articles", on_click = set_state, args = [3])
+            summarize_button = st.button ("Click to summarize selected articles", on_click = set_state, args = [3])
 
-        if st.session_state.stage >= 3:
+            if st.session_state.stage >= 3:
 
-            st.write('#### Selected news items and their summaries')
+                st.write('#### Selected news items and their summaries')
 
-            with get_openai_callback() as cb:
-                with st.spinner("Summarizing articles..."):
+                with get_openai_callback() as cb:
+                    with st.spinner("Summarizing articles..."):
 
-                    article_counter = 1
-                    output_text = ""
-                    for i in range(0, selected_rows.shape[0]):
-                        article_header = str(article_counter) + ".  " + selected_rows.loc[i, "Title"]
-                        st.write(article_header)
-                        output_text = output_text + article_header + "\n"
-                        try:
-                            text = get_text_from_url(selected_rows.loc[i, "URL"])
-                            text_chunks = get_text_chunks(text)
-                            text_summary = get_text_summary(text_chunks)
-                            output_text = output_text + str(text_summary) + "\n"
-                            st.write(str(text_summary))
-                            output_url = f"""[Click here to read in detail...]({selected_rows.loc[i, "URL"]})"""
-                            output_text = output_text + output_url + "\n \n"
-                            article_counter += 1
-                        except Exception as e:
-                            st.write("Error in summarizing article")
-                            st.write(e)
-                    print(cb)    
+                        article_counter = 1
+                        output_text = ""
+                        for i in range(0, selected_rows.shape[0]):
+                            article_header = str(article_counter) + ".  " + selected_rows.loc[i, "Title"]
+                            st.write(article_header)
+                            output_text = output_text + article_header + "\n"
+                            try:
+                                text = get_text_from_url(selected_rows.loc[i, "URL"])
+                                text_chunks = get_text_chunks(text)
+                                text_summary = get_text_summary(text_chunks)
+                                output_text = output_text + str(text_summary) + "\n"
+                                st.write(str(text_summary))
+                                output_url = f"""[Click here to read in detail...]({selected_rows.loc[i, "URL"]})"""
+                                output_text = output_text + output_url + "\n \n"
+                                article_counter += 1
+                            except Exception as e:
+                                st.write("Error in summarizing article")
+                                st.write(e)
+                        print(cb)    
 
-            st.download_button(label = "Click to download summary", data = output_text, 
+                st.download_button(label = "Click to download summary", data = output_text, 
                                        file_name = "news-summary.txt", mime = "text/plain", 
                                        on_click = set_state, args = [4])
                     
-        if st.session_state.stage >= 4:
-            st.write("###### Thanks for using the app \n Total cost of GPT API calls : Rs. " + str(round(cb.total_cost*82, 0)))
+                if st.session_state.stage >= 4:
+                    st.write("###### Thanks for using the app \n Total cost of GPT API calls : Rs. " + str(round(cb.total_cost*82, 0)))
 
 if __name__ == '__main__':
     main()
