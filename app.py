@@ -29,7 +29,7 @@ def main():
     form = st.form(key = "my_form")
     
     keywords = form.text_input("#### Enter keywords to search for", 
-                                    value = 'interview MD after:2023-07-01 -results')
+                                    value = 'interview MD after:2023-07-07 country:India -results')
 
     if 'stage' not in st.session_state:
         st.session_state.stage = 0
@@ -43,15 +43,17 @@ def main():
         response = pd.DataFrame()
         with st.spinner("Searching for articles..."):
             
-            google_news = GNews(language='en', max_results = 100, country = "India")
-            # google_news.topic = "Business"
             
+            google_news = GNews(language='en', max_results = 150)
+            google_news.topic = "Business"
+
             @st.cache_data
             def get_news_func(_gnews_object, kwds):
                 return _gnews_object.get_news(kwds)
 
             response = get_news_func(google_news, keywords)
             response = pd.DataFrame(response)
+            # st.write(response)
 
         response = response.loc[ :, ["published date", "publisher", "title", "url"]]
         
