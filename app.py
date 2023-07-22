@@ -125,8 +125,11 @@ def main():
                             st.write(e)
                     print(cb)    
 
-                    st.download_button(label = "Click to download summary", data = output_text, file_name = "news-summary.txt", mime = "text/plain")
-                    st.write("###### Total cost: Rs. " + str(round(cb.total_cost*82, 0)))
+                    st.download_button(label = "Click to download summary", data = output_text, 
+                                       file_name = "news-summary.txt", mime = "text/plain", on_clink = set_state, args = [4])
+                    
+                    if st.session_state.stage >= 4:
+                        st.write("###### Total cost: Rs. " + str(round(cb.total_cost*82, 0)))
 
 if __name__ == '__main__':
     main()
