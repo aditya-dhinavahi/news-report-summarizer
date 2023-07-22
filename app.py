@@ -43,7 +43,7 @@ def main():
         response = pd.DataFrame()
         with st.spinner("Searching for articles..."):
             
-            google_news = GNews(language='en', max_results = 100, country = "IN")
+            google_news = GNews(language='en', max_results = 100, country = "India")
             # google_news.topic = "Business"
             
             @st.cache_data
