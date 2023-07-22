@@ -126,7 +126,8 @@ def main():
                     print(cb)    
 
                     st.download_button(label = "Click to download summary", data = output_text, 
-                                       file_name = "news-summary.txt", mime = "text/plain", on_clink = set_state, args = [4])
+                                       file_name = "news-summary.txt", mime = "text/plain", 
+                                       on_click = set_state, args = [4])
                     
                     if st.session_state.stage >= 4:
                         st.write("###### Total cost: Rs. " + str(round(cb.total_cost*82, 0)))
