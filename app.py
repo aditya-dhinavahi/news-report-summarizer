@@ -125,7 +125,7 @@ def main():
                                 st.write(e)
                         print(cb)    
 
-                st.download_button(label = "Click to download summary", data = output_text, 
+                download = st.download_button(label = "Click to download summary", data = output_text, 
                                        file_name = "news-summary.txt", mime = "text/plain", 
                                        on_click = set_state, args = [4])
                 
