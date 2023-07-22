@@ -8,8 +8,6 @@ from dotenv import load_dotenv
 
 from langchain.callbacks import get_openai_callback
 
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, JsCode, ColumnsAutoSizeMode
-
 from llm_functions import get_text_from_url, get_text_chunks, get_text_summary
 
 load_dotenv()
