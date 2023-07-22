@@ -130,7 +130,7 @@ def main():
                                        on_click = set_state, args = [4])
                     
         if st.session_state.stage >= 4:
-            st.write("###### Total cost: Rs. " + str(round(cb.total_cost*82, 0)))
+            st.write("###### Thanks for using the app \n Total cost of GPT API calls : Rs. " + str(round(cb.total_cost*82, 0)))
 
 if __name__ == '__main__':
     main()
