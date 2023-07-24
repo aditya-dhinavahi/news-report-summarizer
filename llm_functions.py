@@ -63,22 +63,6 @@ def get_text_summary(text_chunks):
     """
     combine_prompt_template = PromptTemplate(template=combine_prompt, input_variables=["text"])
 
-    # template = template = """
-    # Please write 150 words summary of the following text
-    # Keep name of person interviewed, designation, company and what they said in the summary.
-
-    # {text}
-    # """
-    # prompt = PromptTemplate(input_variables = ["text"], template = template)
-    # summary_chain1 = load_summarize_chain(llm, chain_type = "stuff", prompt = prompt)
-
-    # all_text = ""
-    # for chunks in text_chunks:    
-    #     summ = summary_chain1.run(chunks)
-    #     all_text += summ
-
-    # text = get_text_chunks(all_text)
-
     summary_chain = load_summarize_chain(llm, chain_type = "map_reduce", 
                                         map_prompt=map_prompt_template, 
                                         combine_prompt=combine_prompt_template)
