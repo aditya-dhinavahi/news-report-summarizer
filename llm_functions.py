@@ -37,6 +37,7 @@ def get_text_summary(text_chunks):
     Rules - 
     - Keep the length of the summary to max 160 words.
     - Retain the name of person, designation and company in the summary.
+    - Keep the summary in format <title>, <person interviewed, designation, company>: <text summary>
 
     Text to summarize - <{text}>
     '''
@@ -49,11 +50,14 @@ def get_text_summary(text_chunks):
     - Output of the summary should in format <title>, <person interviewed, designation, company>: <text summary>
     - Keep the length of output summary to max 160 words.
     ///
-    FY23 has been good for the MFI industry but everyone questions the sustainability of these growth rates; Mr Shalabh Saxena, MD & CEO, Spandana Sphoorty 
-    believes that 18-20%% industry growth is very much possible for the next 2 years given under penetration with only reaching 40% of the population, increase 
-    in credit demand for customers with rising income levels from better infra and opportunities. He describes in detail about managing risks and maintaining high ROAs- 
-    assessing the borrower’s affordability, providing timely credit and being a prudent lender. He also addresses stock supply overhang of Padmaja Reddy and that 
-    restricting equity capital raise for funding future growth by reinforcing the management’s commitment to achieving a 18k loan book with the current capital structure.
+    ‘Indian banking sector is set for a golden decade amid growing digicalisation’, Uday Kotak: MD Kotak Bank: details that the 
+    financial sector landscape in India is at an interesting juncture, having witnessed global banking challenges and the 
+    importance of stability. Despite past turbulence, India's financial sector has emerged stronger, but sustained growth 
+    while prioritizing stability and sustainability is crucial.  He believes policymakers should focus on capacity-building 
+    and though public sector banks have shown recovery, a larger capacity is needed to support India's growing economy. 
+    He details the importance of technology in banking's future emphasizes that banks must balance legacy technology 
+    with innovation. He cautions that risks and returns should be adequately priced with PLI scheme as companies to 
+    scale, supporting India Inc.'s growth.
     ///
     Text to check on - <{text}>
     """
