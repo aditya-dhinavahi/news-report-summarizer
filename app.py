@@ -23,7 +23,7 @@ def main():
             2. Select articles to summarize from step 1.
             3. When satisfied, download summary of selected articles as a text file.
             ''')
-    st.text('''Alternatively you can just give a single URL and summarize it.''')
+    st.text('''Alternatively you can just give a single URL and summarize its news article.''')
     
     google_search_help_url = "https://ahrefs.com/blog/google-advanced-search-operators/"
     st.write("Check out this [link](%s) for help with Google search operators" %google_search_help_url)
@@ -42,13 +42,13 @@ def main():
         st.session_state.single_url = True
 
 
-    keywords = form.text_input("#### Enter keywords to search for", 
+    keywords = form.text_input("#### Enter keywords to search for: ", 
                                     value = 'interview MD after:2023-07-07 country:India -results')
     
     submit = form.form_submit_button('Search', on_click = set_state, args = [1])
 
 
-    url = form.text_input('''#### Or enter single URL to get article from''', 
+    url = form.text_input('''#### (or) Enter single url to get article summary for:''', 
                                     value = 'https://www.ambit.co/institutional-equities')
     sumbit2 = form.form_submit_button('''Get summary''',
                                     on_click = set_state_url, args = [3])
