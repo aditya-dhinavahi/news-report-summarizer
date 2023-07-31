@@ -47,10 +47,10 @@ def get_text_summary(text_chunks):
     Summarize the content delimited by <> into a single paragraph and output the content with schema <title>, <person interviewed, designation, company>: <text summary>.
     Example output is given below delimited by ///
     Rules - 
-    - Output of the summary should in format <title>, <person interviewed, designation, company>: <text summary>
+    - Output of the summary should in format <title>, <person interviewed>, <designation> - <company>: <text summary>
     - Keep the length of output summary to max 160 words.
     ///
-    ‘Indian banking sector is set for a golden decade amid growing digicalisation’, Uday Kotak: MD Kotak Bank: details that the 
+    ‘Indian banking sector is set for a golden decade amid growing digicalisation’, Uday Kotak, MD - Kotak Bank: details that the 
     financial sector landscape in India is at an interesting juncture, having witnessed global banking challenges and the 
     importance of stability. Despite past turbulence, India's financial sector has emerged stronger, but sustained growth 
     while prioritizing stability and sustainability is crucial.  He believes policymakers should focus on capacity-building 
