@@ -90,6 +90,22 @@ def get_text_summary_custom(summary_type, prompt_user_text, text_chunks):
         summary_chain = load_summarize_chain(llm=llm, chain_type='stuff', prompt = prompt)
 
     elif summary_type == "topic-wise":
+        example_output = '''
+Intelligence vs. Smarts: The article highlights that while schools tend to value and teach intelligence, smarts, which include empathy and communication skills, are more likely to lead to success in life. It emphasizes that the most important decision in life, choosing a partner, requires smarts rather than intelligence.
+
+Understanding how the world works: The article emphasizes the importance of understanding how the world actually works in practice rather than just relying on theoretical knowledge. It states that people are emotional and make decisions based on various factors, not just logic.
+
+Buying bubbles: The article mentions George Soros's strategy of buying overvalued investments, which may seem irrational to intelligent people but makes sense to smart people who understand the psychology of investors and the likelihood of bubbles growing larger.
+
+Baseball: The article suggests that baseball has become boring over the last 20 years because teams have become more intelligent and focused on data-driven strategies, leading to a crisis of falling interest and attendance.
+
+Accepting different perspectives: The article highlights the importance of intelligence in understanding that people with different lived experiences will have different perspectives and that debates often involve people talking past each other. It emphasizes that accepting and understanding different viewpoints is crucial for success.
+
+Tolerating different views: The article states that the "right" answer to most problems is subjective and depends on individual well-being and experiences. It emphasizes that moving forward and getting things done requires tolerating and working with views that may differ from one's own.
+
+'''
+
+
         map_prompt_template = "You are a smart editorial assistant who has to Write a summary the article below. \
     The summary is meant to be read by analysts who are smart and intelligent people. \
     So write in a clear and concise manner, don't use verbose language. \
@@ -110,7 +126,10 @@ def get_text_summary_custom(summary_type, prompt_user_text, text_chunks):
                                         .
                                         <topicn>:<topicn-summary>
                                         
-                                        <text>
+                                        Here's sample output given delimited by double hash signs ##
+                                        #{example_output}#
+
+                                        
                                         Text to summarize - """ + """{text} \n
 
                                         TOPIC-WISE SUMMARY:
