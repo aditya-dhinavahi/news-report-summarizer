@@ -4,14 +4,20 @@ from langchain.chat_models import ChatOpenAI
 from langchain import PromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
-from newspaper import Article
+from newspaper import Article, Config
 
 load_dotenv()
 
-llm = ChatOpenAI(temperature=0, model = "gpt-3.5-turbo")
+llm = ChatOpenAI(temperature=0, model = "gpt-3.5-turbo-0613")
+
+user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0'
+
+config = Config()
+config.browser_user_agent = user_agent
+config.request_timeout = 15
 
 def get_text_from_url(url):
-                article = Article(url)
+                article = Article(url, config = config)
                 article.download()
                 article.parse()
                 text = article.text
@@ -19,7 +25,7 @@ def get_text_from_url(url):
                 # print(text[0:1000])
                 return article.text
             
-def get_text_chunks(text):
+def get_text_chunks(text, chunk_size = 2000, chunk_overlap = 500):
     text_splitter = RecursiveCharacterTextSplitter(
     chunk_size = 2000,
     chunk_overlap = 500,
@@ -69,3 +75,52 @@ def get_text_summary(text_chunks):
     
     summary = summary_chain.run(text_chunks)
     return summary
+
+def get_text_summary_custom(summary_type, prompt_user_text, text_chunks):
+    if summary_type == "simple":
+        template = f"""{prompt_user_text} \n \n
+
+        Text to summarize - """ + """{text}
+        SUMMARY: 
+        """
+        prompt = PromptTemplate(
+            input_variables=["text"],
+            template=template)
+
+        summary_chain = load_summarize_chain(llm=llm, chain_type='stuff', prompt = prompt)
+
+    elif summary_type == "topic-wise":
+        map_prompt_template = "You are a smart editorial assistant who has to Write a summary the article below. \
+    The summary is meant to be read by analysts who are smart and intelligent people. \
+    So write in a clear and concise manner, don't use verbose language. \
+    No need to state the obvious by starting the sentence with 'This text...', \
+    just get right to the point.Write topic-wise summaries for the text below. \
+    You will be give chunk of text delimited by <>. Get key topic of the text and write summary for the topic.\
+                        \
+    Output should look like the form $topic$:$topic summary$ \
+    Actual text: <{text}>\n \
+                        "
+        combine_prompt_template = f"""{prompt_user_text} \n \n
+                                        
+                                        Output should look like -
+                                        <topic1>:<topic1-summary>
+                                        <topic2>:<topic2-summary>
+                                        .
+                                        .
+                                        .
+                                        <topicn>:<topicn-summary>
+                                        
+                                        <text>
+                                        Text to summarize - """ + """{text} \n
+
+                                        TOPIC-WISE SUMMARY:
+                                        """
+        map_prompt = PromptTemplate(template = map_prompt_template, input_variables=["text"])
+        combine_prompt = PromptTemplate(template = combine_prompt_template, input_variables=["text"])
+        summary_chain = load_summarize_chain(llm=llm, chain_type='map_reduce', 
+                                            map_prompt=map_prompt, 
+                                            combine_prompt=combine_prompt)
+        
+    output = summary_chain.run(text_chunks)
+    return output
+        
